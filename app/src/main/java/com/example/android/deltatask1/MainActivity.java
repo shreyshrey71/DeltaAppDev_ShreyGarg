@@ -68,24 +68,28 @@ public class MainActivity extends AppCompatActivity {
     public void setage(View view)
     {
         EditText e = (EditText) findViewById(R.id.age);
-        age=Integer.parseInt(e.getText().toString());
-        TextView t = (TextView) findViewById(R.id.ageshow);
-        t.setText(""+age);
-        LinearLayout l11 = (LinearLayout) findViewById(R.id.agelay);
-        LinearLayout l13= (LinearLayout) findViewById(R.id.ag);
-        l13.setVisibility(View.VISIBLE);
-        l11.setVisibility(View.GONE);
+        if(!(e.getText().toString().equals(""))) {
+            age = Integer.parseInt(e.getText().toString());
+            TextView t = (TextView) findViewById(R.id.ageshow);
+            t.setText("" + age);
+            LinearLayout l11 = (LinearLayout) findViewById(R.id.agelay);
+            LinearLayout l13 = (LinearLayout) findViewById(R.id.ag);
+            l13.setVisibility(View.VISIBLE);
+            l11.setVisibility(View.GONE);
+        }
     }
     public void setlives(View view)
     {
         EditText e = (EditText) findViewById(R.id.lives);
-        lives=Integer.parseInt(e.getText().toString());
-        TextView t = (TextView) findViewById(R.id.liveshow);
-        t.setText(""+lives);
-        LinearLayout l12 = (LinearLayout) findViewById(R.id.liveslay);
-        LinearLayout l14= (LinearLayout) findViewById(R.id.liv);
-        l14.setVisibility(View.VISIBLE);
-        l12.setVisibility(View.GONE);
+        if(!(e.getText().toString().equals(""))) {
+            lives = Integer.parseInt(e.getText().toString());
+            TextView t = (TextView) findViewById(R.id.liveshow);
+            t.setText("" + lives);
+            LinearLayout l12 = (LinearLayout) findViewById(R.id.liveslay);
+            LinearLayout l14 = (LinearLayout) findViewById(R.id.liv);
+            l14.setVisibility(View.VISIBLE);
+            l12.setVisibility(View.GONE);
+        }
 
     }
     public void startclick(View view)
@@ -97,34 +101,33 @@ public class MainActivity extends AppCompatActivity {
     }
     public void guesscheck(View view)
     {EditText e = (EditText) findViewById(R.id.guess);
+        if(!(e.getText().toString().equals(""))) {
+            guess = Integer.parseInt(e.getText().toString());
+            guess = Math.abs(age - guess);
 
-     guess=Integer.parseInt(e.getText().toString());
-     guess=Math.abs(age-guess);
+            config = getResources().getConfiguration();
+            if (config.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                ImageView l201 = (ImageView) findViewById(R.id.liveback);
+                l201.setVisibility(View.GONE);
+                e.setBackgroundColor(Color.parseColor("#363636"));
+                LinearLayout l20 = (LinearLayout) findViewById(R.id.back);
+                l20.setBackgroundColor(Color.parseColor(col[guess / 10]));
+            } else if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                RelativeLayout r20 = (RelativeLayout) findViewById(R.id.back2);
+                r20.setBackgroundColor(Color.parseColor(col[guess / 10]));
+            }
+            TextView v = (TextView) findViewById(R.id.livecount);
+            v.setText(" x " + --lives);
 
-     config=getResources().getConfiguration();
-     if(config.orientation==Configuration.ORIENTATION_PORTRAIT) {
-         ImageView l201 = (ImageView) findViewById(R.id.liveback);
-         l201.setVisibility(View.GONE);
-         e.setBackgroundColor(Color.parseColor("#363636"));
-         LinearLayout l20 = (LinearLayout) findViewById(R.id.back);
-         l20.setBackgroundColor(Color.parseColor(col[guess / 10]));
-     }
-     else if(config.orientation==Configuration.ORIENTATION_LANDSCAPE)
-     {
-         RelativeLayout r20 = (RelativeLayout) findViewById(R.id.back2);
-                 r20.setBackgroundColor(Color.parseColor(col[guess/10]));
-     }
-        TextView v = (TextView) findViewById(R.id.livecount);
-        v.setText(" x "+--lives);
+            if (guess == 0) {
+                f = 1;
+                result(1);
 
-        if(guess==0) {f = 1;
-            result(1);
+            } else if (lives == 0) {
+                f = 1;
+                result(0);
 
-        }
-        else if(lives==0)
-        {f = 1;
-            result(0);
-
+            }
         }
     }
     public void result(int decree)
